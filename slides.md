@@ -952,6 +952,65 @@ a feedback loop.
 
 <!-- end_slide -->
 
+Role-Playing Prompts
+===
+
+<!-- column_layout: [1, 1] -->
+
+<!-- column: 0 -->
+
+### Why role-playing works
+
+Language models are autoregressive — each token is conditioned on all previous tokens. A role-playing prefix shifts the **conditional distribution** over every subsequent token.
+
+```typst +render
+$P(x_(t+1) | x_1, ..., x_t)$
+```
+
+When the context begins with "You are an expert in X", the model's next-token distribution skews toward tokens that an expert in X would produce — technical vocabulary, deeper reasoning, domain-appropriate caution.
+
+<!-- pause -->
+
+This is not anthropomorphism — it is **conditional sampling**. The persona prefix is a soft constraint that biases generation toward a region of the model's learned distribution.
+
+<!-- column: 1 -->
+
+### Examples
+
+> "You are a senior Rust engineer reviewing
+> code for unsafe blocks and lifetime errors."
+
+The model prioritizes safety and correctness concerns over feature suggestions.
+
+> "You are a security auditor. Review this
+> PR for OWASP top 10 vulnerabilities."
+
+Activates security-specific vocabulary and patterns the model learned during training.
+
+> "Act as a compiler. Read this code and
+> predict exactly what it outputs for input 5."
+
+Forces step-by-step execution trace instead of high-level description.
+
+<!-- pause -->
+
+> "You are a team: an architect who designs
+> the API, a security engineer who reviews it,
+> and a QA engineer who writes edge-case tests.
+> Discuss the design, then produce the code."
+
+The model samples from **multiple conditional distributions in sequence** — architect tokens, then security tokens, then QA tokens — producing output that no single persona would.
+
+<!-- reset_layout -->
+
+<!-- pause -->
+
+**Intuition: a role-playing prefix does not give the model new knowledge — it steers which knowledge gets activated. Multi-persona prompts work because LLMs are probabilistic machines — they can sample from different regions of the distribution within a single generation.**
+
+<!-- speaker_note: "Role-playing works because of how autoregressive sampling works. The prefix conditions every downstream token. It's the same model, same weights — but the distribution over outputs shifts. Multi-persona prompts are the strongest evidence that LLMs are not reasoning agents but probabilistic machines — they can fluently switch between expert distributions because they're sampling, not thinking." -->
+
+<!-- end_slide -->
+
 The Evolution of AI-Assisted Engineering
 ===
 
@@ -1098,6 +1157,8 @@ The agents wrote application logic, docs, CI config, observability, and tooling 
 <!-- pause -->
 
 > Your primary job is no longer to write code, but to **design environments**, **specify intent**, and **build feedback loops** that allow agents to do reliable work.
+
+*Harness engineering: leveraging Codex in an agent-first world* (Lopopolo, OpenAI, 2026)
 
 <!-- speaker_note: "This is the OpenAI blog post that coined the term. The key insight: the harness is the product, not the code. Everything we covered — anti-patterns, verification, formalism — is harness engineering." -->
 
