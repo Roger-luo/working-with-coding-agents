@@ -33,7 +33,14 @@ jobs:
         run: cargo binstall presenterm --no-confirm
 
       - name: Export slides to HTML
-        run: script -qec 'presenterm slides.md --export-html' /dev/null
+        run: |
+          cat > /tmp/presenterm-config.yaml << 'EOF'
+          export:
+            dimensions:
+              rows: 35
+              columns: 135
+          EOF
+          presenterm slides.md --export-html -c /tmp/presenterm-config.yaml
 
       - name: Prepare site
         run: |
