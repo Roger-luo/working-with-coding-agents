@@ -1,5 +1,7 @@
 # Large Language Models & Coding Agents
 
+[![Slides](https://img.shields.io/badge/slides-available-blue)](https://rogerluo.dev/working-with-coding-agents/)
+
 Terminal-based presentation covering LLM internals, coding agents, prompt engineering, and harness engineering — from theory to practice.
 
 ## Contents
