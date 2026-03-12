@@ -23,4 +23,4 @@ presenterm slides.md
 
 ## Skills
 
-Managed with [ion](https://github.com/anthropics/ion). Run `ion add` to install skills from `Ion.toml`.
+Managed with [ion](https://github.com/Roger-luo/Ion). Run `ion add` to install skills from `Ion.toml`.
