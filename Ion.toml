@@ -1,0 +1,8 @@
+[skills]
+ion-cli = { type = "local" }
+presenterm = { type = "local", path = "skills/presenterm" }
+
+[options]
+
+[options.targets]
+claude = ".claude/skills"
