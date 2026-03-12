@@ -33,7 +33,7 @@ jobs:
         run: cargo binstall presenterm --no-confirm
 
       - name: Export slides to HTML
-        run: presenterm slides.md --export-html
+        run: script -qec 'presenterm slides.md --export-html' /dev/null
 
       - name: Prepare site
         run: |
