@@ -12,6 +12,8 @@ Presenterm renders markdown files as terminal slide decks. This skill covers
 the slide format, all special commands, and best practices for readable
 terminal presentations.
 
+Docs: https://mfontanini.github.io/presenterm/introduction.html
+
 ## Slide Structure
 
 - Slides are separated by `<!-- end_slide -->` (not `---`)
