@@ -66,25 +66,31 @@ Self-Attention Mechanism
 
 <!-- column: 0 -->
 
-Given a sequence matrix **X** ∈ ℝ^(n × d_model) with *n* tokens:
+Given a sequence matrix $bold(X) in RR^(n times d_"model")$ with $n$ tokens:
 
-**Q = X W_Q,   K = X W_K,   V = X W_V**
+```typst +render
+$bold(Q) = bold(X) bold(W)_Q, quad bold(K) = bold(X) bold(W)_K, quad bold(V) = bold(X) bold(W)_V$
+```
 
-where W_Q, W_K ∈ ℝ^(d_model × d_k) and W_V ∈ ℝ^(d_model × d_v).
+where $bold(W)_Q, bold(W)_K in RR^(d_"model" times d_k)$ and $bold(W)_V in RR^(d_"model" times d_v)$.
 
 The attention score from token *i* to token *j*:
 
-**α(i,j) = exp(q_i · k_j / √d_k) / Σ_l exp(q_i · k_l / √d_k)**
+```typst +render
+$alpha(i,j) = exp(bold(q)_i dot bold(k)_j \/ sqrt(d_k)) / sum_l exp(bold(q)_i dot bold(k)_l \/ sqrt(d_k))$
+```
 
 Matrix form:
 
-**A = softmax(Q K^T / √d_k)**
-
-**Z = A V**
+```typst +render
+$bold(A) = op("softmax")(bold(Q) bold(K)^T \/ sqrt(d_k)), quad bold(Z) = bold(A) bold(V)$
+```
 
 Each output vector is a weighted mix of all value vectors:
 
-**z_i = Σ_j α(i,j) v_j**
+```typst +render
+$bold(z)_i = sum_j alpha(i,j) bold(v)_j$
+```
 
 <!-- column: 1 -->
 
@@ -127,23 +133,31 @@ Multi-Head Attention
 
 <!-- column: 0 -->
 
-Multi-head attention runs **H** attention blocks in parallel on different learned subspaces.
+Multi-head attention runs $H$ attention blocks in parallel on different learned subspaces.
 
-For each head *h = 1, 2, ..., H*:
+For each head $h = 1, 2, ..., H$:
 
-**Q_h = X W_h^Q,   K_h = X W_h^K,   V_h = X W_h^V**
+```typst +render
+$bold(Q)_h = bold(X) bold(W)_h^Q, quad bold(K)_h = bold(X) bold(W)_h^K, quad bold(V)_h = bold(X) bold(W)_h^V$
+```
 
-**O_h = softmax(Q_h K_h^T / √d_k) V_h**
+```typst +render
+$bold(O)_h = op("softmax")(bold(Q)_h bold(K)_h^T \/ sqrt(d_k)) bold(V)_h$
+```
 
-with *d_k = d_v = d_model / H*.
+with $d_k = d_v = d_"model" \/ H$.
 
 Concatenate all heads:
 
-**M = Concat(O_1, O_2, ..., O_H)**
+```typst +render
+$bold(M) = op("Concat")(bold(O)_1, bold(O)_2, ..., bold(O)_H)$
+```
 
 Final output projection:
 
-**Y = M W^O**
+```typst +render
+$bold(Y) = bold(M) bold(W)^O$
+```
 
 <!-- column: 1 -->
 
@@ -187,19 +201,16 @@ Transformer
 
 A Transformer layer combines multi-head attention, feed-forward networks, and residual connections. This is the **pre-norm** variant (used in GPT-2+), where LayerNorm precedes each sub-layer.
 
-For layer *l*, let input be *X_l*:
+For layer $l$, let input be $bold(X)_l$:
 
-**N_l = LN(X_l)**
-
-**M_l = MHA(N_l)**
-
-**H_l = X_l + M_l**
-
-**R_l = LN(H_l)**
-
-**F_l = FFN(R_l)**
-
-**X_(l+1) = H_l + F_l**
+```typst +render
+$bold(N)_l &= op("LN")(bold(X)_l) \
+bold(M)_l &= op("MHA")(bold(N)_l) \
+bold(H)_l &= bold(X)_l + bold(M)_l \
+bold(R)_l &= op("LN")(bold(H)_l) \
+bold(F)_l &= op("FFN")(bold(R)_l) \
+bold(X)_(l+1) &= bold(H)_l + bold(F)_l$
+```
 
 <!-- column: 1 -->
 
@@ -1436,15 +1447,17 @@ Stabilizer Tableau Simulator
 
 ### The stabilizer formalism
 
-A stabilizer state |ψ⟩ on *n* qubits is uniquely defined by *n* independent Pauli operators *S_i* such that:
+A stabilizer state $|psi⟩$ on $n$ qubits is uniquely defined by $n$ independent Pauli operators $S_i$ such that:
 
-**S_i |ψ⟩ = |ψ⟩** for all *i*
+```typst +render
+$S_i |psi⟩ = |psi⟩ quad forall i$
+```
 
-Example: |0⟩ is stabilized by **+Z**. |+⟩ is stabilized by **+X**. The Bell state |Φ+⟩ is stabilized by **+XX** and **+ZZ**.
+Example: $|0⟩$ is stabilized by $+Z$. $|+⟩$ is stabilized by $+X$. The Bell state $|Phi^+⟩$ is stabilized by $+X X$ and $+Z Z$.
 
 ### The Gottesman-Knill theorem
 
-Any circuit of **Clifford gates** (H, S, CNOT) on a stabilizer state can be simulated in **O(n²)** time — exponentially faster than full state-vector simulation.
+Any circuit of **Clifford gates** (H, S, CNOT) on a stabilizer state can be simulated in $O(n^2)$ time — exponentially faster than full state-vector simulation.
 
 *Improved Simulation of Stabilizer Circuits*
 (Aaronson & Gottesman, 2004)
@@ -1462,7 +1475,7 @@ Store stabilizers as a binary matrix — each row is a Pauli operator:
 | 0 | 1 |   Z   |
 | 1 | 1 |   Y   |
 
-A 2*n* × (2*n* + 1) binary matrix:
+A $2n times (2n + 1)$ binary matrix:
 
 - First *n* rows: **destabilizers** (track X operators)
 - Last *n* rows: **stabilizers** (track Z operators)
@@ -1650,7 +1663,9 @@ Demo Step 3: Hadamard Gate
 
 Hadamard maps:
 
-**X → Z,   Z → X,   Y → −Y**
+```typst +render
+$X arrow.r Z, quad Z arrow.r X, quad Y arrow.r -Y$
+```
 
 On the tableau, for each row and qubit *j*:
 
@@ -1697,7 +1712,9 @@ Demo Step 4: Phase (S) Gate
 
 ### Conjugation rules
 
-**X → Y,   Z → Z,   Y → −X**
+```typst +render
+$X arrow.r Y, quad Z arrow.r Z, quad Y arrow.r -X$
+```
 
 On the tableau, for each row and qubit *j*:
 
@@ -1846,9 +1863,11 @@ Demo Step 7: Property Tests
 
 Unit tests verify *specific* circuits. Property tests verify *invariants* over **all** circuits.
 
-**Key invariant:** for any Clifford circuit U:
+**Key invariant:** for any Clifford circuit $U$:
 
-**U U† = I**
+```typst +render
+$U U^dagger = I$
+```
 
 The tableau after U then U† must equal the initial state.
 
